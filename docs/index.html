@@ -100,6 +100,26 @@
     .btn-danger:hover:not(:disabled){background:#C0392B22}
     .btn-row{display:flex;gap:6px;margin-top:6px}
     .btn-row .btn{flex:1}
+    /* orientation */
+    .axis-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px}
+    .axis-btn{background:var(--panel2);border:1px solid var(--border2);border-radius:4px;padding:7px 4px;text-align:center;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--muted);transition:border-color .15s,color .15s}
+    .axis-btn:hover{border-color:var(--amber);color:var(--amber)}
+    .axis-btn span{display:block;font-size:9px;opacity:.6;margin-top:1px}
+    .rot-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+    .rot-row:last-child{margin-bottom:0}
+    .rot-axis-label{font-family:var(--mono);font-size:11px;font-weight:700;width:14px;flex-shrink:0}
+    .rot-axis-label.x{color:#E05555}
+    .rot-axis-label.y{color:#55B055}
+    .rot-axis-label.z{color:#5588E0}
+    .rot-nudge{display:flex;gap:3px;flex:1}
+    .rot-nudge button{flex:1;background:var(--panel2);border:1px solid var(--border);border-radius:3px;color:var(--muted);font-family:var(--mono);font-size:11px;padding:5px 2px;cursor:pointer;transition:border-color .12s,color .12s}
+    .rot-nudge button:hover{border-color:var(--amber);color:var(--amber)}
+    .rot-val{font-family:var(--mono);font-size:10px;color:var(--subtle);width:36px;text-align:right;flex-shrink:0}
+    .face-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+    .face-btn{background:var(--panel2);border:1px solid var(--border);border-radius:4px;padding:7px 6px;cursor:pointer;font-size:11px;color:var(--muted);transition:border-color .15s,color .15s;text-align:left;display:flex;align-items:center;gap:6px}
+    .face-btn:hover{border-color:var(--amber);color:var(--text)}
+    .face-btn .fb-arrow{font-size:14px;flex-shrink:0}
+    .face-btn .fb-label{font-size:10px}
     /* viewport */
     #viewport{background:var(--bg);position:relative;overflow:hidden}
     #three-canvas{width:100%;height:100%;display:block}
@@ -226,6 +246,63 @@
         </div>
       </div>
     </div>
+    <!-- Orientation -->
+    <div class="section" id="orient-section">
+      <div class="section-label">Orientation</div>
+      <!-- Quick-orient axis buttons -->
+      <div style="font-size:10px;color:var(--muted);margin-bottom:6px">Lay flat on axis</div>
+      <div class="axis-btns">
+        <button class="axis-btn" data-orient="+X">+X<span>face down</span></button>
+        <button class="axis-btn" data-orient="+Y">+Y<span>face down</span></button>
+        <button class="axis-btn" data-orient="+Z">+Z<span>face down</span></button>
+        <button class="axis-btn" data-orient="-X">-X<span>face down</span></button>
+        <button class="axis-btn" data-orient="-Y">-Y<span>face down</span></button>
+        <button class="axis-btn" data-orient="-Z">-Z<span>face down</span></button>
+      </div>
+      <!-- Auto-orient -->
+      <button class="btn btn-secondary" id="btn-auto-orient" disabled style="margin-bottom:10px">Auto-Orient (min supports)</button>
+      <!-- Place on bed -->
+      <button class="btn btn-secondary" id="btn-place-bed" disabled style="margin-bottom:10px">Place on Bed</button>
+      <!-- Manual rotation nudge -->
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px">Manual rotation</div>
+      <div class="rot-row">
+        <div class="rot-axis-label x">X</div>
+        <div class="rot-nudge">
+          <button data-rot-axis="x" data-rot-deg="-90">-90°</button>
+          <button data-rot-axis="x" data-rot-deg="-15">-15°</button>
+          <button data-rot-axis="x" data-rot-deg="+15">+15°</button>
+          <button data-rot-axis="x" data-rot-deg="+90">+90°</button>
+        </div>
+        <div class="rot-val" id="rot-val-x">0°</div>
+      </div>
+      <div class="rot-row">
+        <div class="rot-axis-label y">Y</div>
+        <div class="rot-nudge">
+          <button data-rot-axis="y" data-rot-deg="-90">-90°</button>
+          <button data-rot-axis="y" data-rot-deg="-15">-15°</button>
+          <button data-rot-axis="y" data-rot-deg="+15">+15°</button>
+          <button data-rot-axis="y" data-rot-deg="+90">+90°</button>
+        </div>
+        <div class="rot-val" id="rot-val-y">0°</div>
+      </div>
+      <div class="rot-row">
+        <div class="rot-axis-label z">Z</div>
+        <div class="rot-nudge">
+          <button data-rot-axis="z" data-rot-deg="-90">-90°</button>
+          <button data-rot-axis="z" data-rot-deg="-15">-15°</button>
+          <button data-rot-axis="z" data-rot-deg="+15">+15°</button>
+          <button data-rot-axis="z" data-rot-deg="+90">+90°</button>
+        </div>
+        <div class="rot-val" id="rot-val-z">0°</div>
+      </div>
+      <!-- Reset rotation -->
+      <button class="btn btn-secondary" id="btn-reset-orient" disabled style="margin-top:8px">Reset Rotation</button>
+      <!-- Face selection -->
+      <div style="font-size:10px;color:var(--muted);margin:10px 0 6px">Place face down</div>
+      <div class="face-grid" id="face-grid">
+        <div style="font-size:10px;color:var(--subtle);grid-column:1/-1;text-align:center;padding:4px 0">Load a model to detect faces</div>
+      </div>
+    </div>
     <!-- Analysis -->
     <div class="section">
       <div class="section-label">Print Analysis</div>
@@ -288,7 +365,7 @@
   <footer id="statusbar">
     <div id="statusbar-msg">Ready &mdash; load an STL or 3MF file to begin</div>
     <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
-    <div>v1.1.0</div>
+    <div>v1.2.0</div>
   </footer>
 </div>
 
@@ -553,29 +630,35 @@ function runRepairScan(geo){
 function doRepair(geo){
   const pos=geo.attributes.position,nrm=geo.attributes.normal;
   const tris=pos.count/3;
-  const iss=state.repairIssues||analyzeMesh(geo);
-  // Dedup faces to catch non-manifold duplicates
+  // Always re-analyze fresh — never use stale state.repairIssues
+  const iss=analyzeMesh(geo);
+  // Build duplicate face set
   const faceKeys=new Map();const dupTris=new Set();
   const{canonIdx}=buildEdgeMap(geo);
   for(let t=0;t<tris;t++){
     const vs=[canonIdx[t*3],canonIdx[t*3+1],canonIdx[t*3+2]].slice().sort((a,b)=>a-b);
     const k=vs.join('_');if(faceKeys.has(k))dupTris.add(t);else faceKeys.set(k,t);
   }
-  const newPos=[],newNrm=[],issueArr=[];let removed=0,repaired=0;
+  // Remove degenerate, duplicate, AND non-manifold triangles
+  // Open-edge triangles are kept (removing them all would destroy valid open meshes)
+  const removeTris=new Set([...iss.degTris,...dupTris,...iss.nmTris]);
+  const newPos=[],newNrm=[],issueArr=[];let removed=0;
   for(let t=0;t<tris;t++){
-    if(iss.degTris.has(t)){removed++;continue;}
-    if(dupTris.has(t)){removed++;continue;}
-    for(let v=0;v<3;v++){const vi=t*3+v;newPos.push(pos.getX(vi),pos.getY(vi),pos.getZ(vi));if(nrm)newNrm.push(nrm.getX(vi),nrm.getY(vi),nrm.getZ(vi));}
-    const wasIss=(iss.nmTris.has(t)||iss.oeTris.has(t))?3:0;
-    issueArr.push(wasIss,wasIss,wasIss);
-    if(wasIss)repaired++;
+    if(removeTris.has(t)){removed++;continue;}
+    for(let v=0;v<3;v++){
+      const vi=t*3+v;
+      newPos.push(pos.getX(vi),pos.getY(vi),pos.getZ(vi));
+      if(nrm)newNrm.push(nrm.getX(vi),nrm.getY(vi),nrm.getZ(vi));
+    }
+    const wasOE=iss.oeTris.has(t)?3:0;
+    issueArr.push(wasOE,wasOE,wasOE);
   }
   const g=new THREE.BufferGeometry();
   g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(newPos),3));
   if(nrm)g.setAttribute('normal',new THREE.BufferAttribute(new Float32Array(newNrm),3));
   g.setAttribute('aIssue',new THREE.BufferAttribute(new Float32Array(issueArr),1));
   g.computeBoundingBox();
-  return{geo:g,removed,repaired};
+  return{geo:g,removed};
 }
 
 // ── Display modes ─────────────────────────────────────────
@@ -660,6 +743,12 @@ function loadGeometry(geo,fileName){
   document.getElementById('btn-process').disabled=false;
   document.getElementById('btn-export-stl').disabled=false;
   document.getElementById('btn-export-3mf').disabled=false;
+  document.getElementById('btn-auto-orient').disabled=false;
+  document.getElementById('btn-place-bed').disabled=false;
+  document.getElementById('btn-reset-orient').disabled=false;
+  rotState.x=rotState.y=rotState.z=0;
+  updateRotDisplay();
+  detectFlatFaces(geo);
 }
 
 // ── Stats & Analysis ──────────────────────────────────────
@@ -751,6 +840,296 @@ function setStatus(msg,prog){
   if(prog!==undefined){document.getElementById('progress-bar-wrap').style.display='block';document.getElementById('progress-bar').style.width=prog+'%';if(prog>=100)setTimeout(()=>document.getElementById('progress-bar-wrap').style.display='none',700);}
 }
 
+
+// ── Orientation ───────────────────────────────────────────
+// Track cumulative euler angles in degrees for display
+const rotState = { x: 0, y: 0, z: 0 };
+
+function updateRotDisplay() {
+  document.getElementById('rot-val-x').textContent = (((rotState.x % 360) + 360) % 360).toFixed(0) + '°';
+  document.getElementById('rot-val-y').textContent = (((rotState.y % 360) + 360) % 360).toFixed(0) + '°';
+  document.getElementById('rot-val-z').textContent = (((rotState.z % 360) + 360) % 360).toFixed(0) + '°';
+}
+
+// Bake the current mesh.rotation into geometry so downstream ops use correct coords.
+// Returns a fresh BufferGeometry with rotation applied and mesh.rotation reset to zero.
+function bakeRotation() {
+  if (!mainMesh) return;
+  mainMesh.updateMatrix();
+  // Apply the mesh's current matrix (rotation only) to geometry positions/normals
+  const geo = mainMesh.geometry;
+  const pos = geo.attributes.position;
+  const nrm = geo.attributes.normal;
+  const mat = new THREE.Matrix3().getNormalMatrix(mainMesh.matrix);
+
+  for (let i = 0; i < pos.count; i++) {
+    const v = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i));
+    v.applyMatrix4(mainMesh.matrix);
+    pos.setXYZ(i, v.x, v.y, v.z);
+    if (nrm) {
+      const n = new THREE.Vector3(nrm.getX(i), nrm.getY(i), nrm.getZ(i));
+      n.applyMatrix3(mat).normalize();
+      nrm.setXYZ(i, n.x, n.y, n.z);
+    }
+  }
+  pos.needsUpdate = true;
+  if (nrm) nrm.needsUpdate = true;
+  geo.computeBoundingBox();
+  geo.computeBoundingSphere();
+
+  // Reset mesh transform
+  mainMesh.position.set(0, 0, 0);
+  mainMesh.rotation.set(0, 0, 0);
+  mainMesh.scale.set(1, 1, 1);
+  mainMesh.updateMatrix();
+
+  // Also bake into wireframe
+  if (wireframeMesh) {
+    wireframeMesh.geometry = geo;
+    wireframeMesh.position.set(0, 0, 0);
+    wireframeMesh.rotation.set(0, 0, 0);
+  }
+
+  // Update stored geometries to baked version
+  if (state.repairedGeometry) state.repairedGeometry = geo;
+  else state.geometry = geo;
+
+  return geo;
+}
+
+function nudgeRotation(axis, deg) {
+  if (!mainMesh) return;
+  const rad = deg * Math.PI / 180;
+  const pivot = new THREE.Vector3();
+  const box = new THREE.Box3().setFromObject(mainMesh);
+  box.getCenter(pivot);
+
+  // Rotate around model center
+  mainMesh.position.sub(pivot);
+  if (axis === 'x') mainMesh.rotateX(rad);
+  if (axis === 'y') mainMesh.rotateY(rad);
+  if (axis === 'z') mainMesh.rotateZ(rad);
+  mainMesh.position.add(pivot);
+  if (wireframeMesh) {
+    wireframeMesh.position.copy(mainMesh.position);
+    wireframeMesh.rotation.copy(mainMesh.rotation);
+  }
+
+  rotState[axis] = (rotState[axis] + deg + 360) % 360;
+  updateRotDisplay();
+  setStatus(`Rotated ${axis.toUpperCase()} ${deg > 0 ? '+' : ''}${deg}° — click Place on Bed to snap to grid`);
+}
+
+// Orient so that a given world-axis faces DOWN (+Y in three.js is up, so "down" is -Y)
+// axis: '+X','-X','+Y','-Y','+Z','-Z'
+function orientAxis(axis) {
+  if (!mainMesh) return;
+  // Reset current rotation first (bake so geometry is canonical)
+  bakeRotation();
+  rotState.x = rotState.y = rotState.z = 0;
+
+  // We want the chosen face/axis to point in the -Y world direction (down onto bed)
+  // i.e. rotate so that `axis` maps to (0,-1,0)
+  const target = new THREE.Vector3(0, -1, 0);
+  let src;
+  switch(axis) {
+    case '+X': src = new THREE.Vector3(1,0,0);  break;
+    case '-X': src = new THREE.Vector3(-1,0,0); break;
+    case '+Y': src = new THREE.Vector3(0,1,0);  break;
+    case '-Y': src = new THREE.Vector3(0,-1,0); break;
+    case '+Z': src = new THREE.Vector3(0,0,1);  break;
+    case '-Z': src = new THREE.Vector3(0,0,-1); break;
+  }
+
+  const q = new THREE.Quaternion().setFromUnitVectors(src, target);
+  mainMesh.quaternion.copy(q);
+  if (wireframeMesh) wireframeMesh.quaternion.copy(q);
+
+  placeOnBed();
+  bakeRotation();
+  updateStats(mainMesh.geometry);
+  runRepairScan(mainMesh.geometry);
+  updateRotDisplay();
+  setStatus(`Oriented ${axis} face down`);
+}
+
+// Translate mesh so its lowest point sits exactly on the bed (Y=0)
+function placeOnBed() {
+  if (!mainMesh) return;
+  // Need world-space bounding box accounting for current rotation
+  const box = new THREE.Box3().setFromObject(mainMesh);
+  const lift = -box.min.y;
+  mainMesh.position.y += lift;
+  if (wireframeMesh) wireframeMesh.position.y = mainMesh.position.y;
+  setStatus('Placed on bed — lowest point at Z=0');
+}
+
+// Auto-orient: try all 6 axis orientations, score by minimizing overhang area,
+// then apply the best one.
+function autoOrient() {
+  if (!mainMesh) return;
+  const axes = ['+X','-X','+Y','-Y','+Z','-Z'];
+  const srcVecs = [
+    new THREE.Vector3(1,0,0), new THREE.Vector3(-1,0,0),
+    new THREE.Vector3(0,1,0), new THREE.Vector3(0,-1,0),
+    new THREE.Vector3(0,0,1), new THREE.Vector3(0,0,-1),
+  ];
+  const downDir = new THREE.Vector3(0,-1,0);
+
+  // Work on geometry normals (bake first for clean state)
+  bakeRotation();
+  const geo = mainMesh.geometry;
+  const nrm = geo.attributes.normal;
+  if (!nrm) { setStatus('No normals — cannot auto-orient'); return; }
+
+  let bestAxis = '+Y', bestScore = Infinity;
+
+  srcVecs.forEach((src, i) => {
+    // Rotation quaternion: src -> down
+    const q = new THREE.Quaternion().setFromUnitVectors(src, downDir);
+    const mat3 = new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(q));
+
+    // Score = count of face normals pointing more downward than threshold (overhangs)
+    let overhangCount = 0;
+    const tmp = new THREE.Vector3();
+    for (let f = 0; f < nrm.count; f += 3) {
+      tmp.set(nrm.getX(f), nrm.getY(f), nrm.getZ(f)).applyMatrix3(mat3).normalize();
+      // dot with (0,1,0) world up — negative dot = pointing downward = overhang
+      if (tmp.y < -0.3) overhangCount++;
+    }
+
+    if (overhangCount < bestScore) {
+      bestScore = overhangCount;
+      bestAxis = axes[i];
+    }
+  });
+
+  orientAxis(bestAxis);
+  setStatus(`Auto-oriented: ${bestAxis} face down (${bestScore} overhang faces minimized)`);
+}
+
+// Detect the N largest flat faces and populate face-selection buttons
+function detectFlatFaces(geo) {
+  const nrm = geo.attributes.normal;
+  const pos = geo.attributes.position;
+  if (!nrm) return;
+
+  // Bucket faces by normal direction (quantized to 2 decimal places)
+  const buckets = new Map();
+  for (let f = 0; f < nrm.count; f += 3) {
+    const nx = Math.round(nrm.getX(f) * 50) / 50;
+    const ny = Math.round(nrm.getY(f) * 50) / 50;
+    const nz = Math.round(nrm.getZ(f) * 50) / 50;
+    const len = Math.sqrt(nx*nx + ny*ny + nz*nz);
+    if (len < 0.5) continue;
+    const key = `${(nx/len).toFixed(2)},${(ny/len).toFixed(2)},${(nz/len).toFixed(2)}`;
+    if (!buckets.has(key)) buckets.set(key, { count: 0, nx: nx/len, ny: ny/len, nz: nz/len });
+    buckets.get(key).count++;
+  }
+
+  // Sort by face count, take top 6
+  const top = [...buckets.values()].sort((a,b) => b.count - a.count).slice(0, 6);
+
+  const faceGrid = document.getElementById('face-grid');
+  if (top.length === 0) {
+    faceGrid.innerHTML = '<div style="font-size:10px;color:var(--subtle);grid-column:1/-1;text-align:center;padding:4px 0">No flat faces detected</div>';
+    return;
+  }
+
+  faceGrid.innerHTML = top.map((f, i) => {
+    const label = faceLabel(f.nx, f.ny, f.nz);
+    return `<button class="face-btn" data-face-idx="${i}" data-nx="${f.nx.toFixed(3)}" data-ny="${f.ny.toFixed(3)}" data-nz="${f.nz.toFixed(3)}">
+      <span class="fb-arrow">${faceArrow(f.nx, f.ny, f.nz)}</span>
+      <span class="fb-label">${label}<br><span style="opacity:.5">${f.count} faces</span></span>
+    </button>`;
+  }).join('');
+
+  faceGrid.querySelectorAll('.face-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nx = parseFloat(btn.dataset.nx);
+      const ny = parseFloat(btn.dataset.ny);
+      const nz = parseFloat(btn.dataset.nz);
+      placeFaceDown(nx, ny, nz);
+    });
+  });
+}
+
+function faceLabel(nx, ny, nz) {
+  const a = Math.abs(nx), b = Math.abs(ny), c = Math.abs(nz);
+  if (a > b && a > c) return nx > 0 ? '+X face' : '-X face';
+  if (b > a && b > c) return ny > 0 ? 'Top face' : 'Bottom face';
+  return nz > 0 ? '+Z face' : '-Z face';
+}
+
+function faceArrow(nx, ny, nz) {
+  const a = Math.abs(nx), b = Math.abs(ny), c = Math.abs(nz);
+  if (a > b && a > c) return nx > 0 ? '→' : '←';
+  if (b > a && b > c) return ny > 0 ? '↑' : '↓';
+  return nz > 0 ? '▣' : '▣';
+}
+
+// Rotate mesh so the face with normal (nx,ny,nz) points down, then place on bed
+function placeFaceDown(nx, ny, nz) {
+  if (!mainMesh) return;
+  bakeRotation();
+  rotState.x = rotState.y = rotState.z = 0;
+
+  const faceNormal = new THREE.Vector3(nx, ny, nz).normalize();
+  const downDir = new THREE.Vector3(0, -1, 0);
+  const q = new THREE.Quaternion().setFromUnitVectors(faceNormal, downDir);
+  mainMesh.quaternion.copy(q);
+  if (wireframeMesh) wireframeMesh.quaternion.copy(q);
+
+  placeOnBed();
+  bakeRotation();
+  updateStats(mainMesh.geometry);
+  updateRotDisplay();
+  detectFlatFaces(mainMesh.geometry);
+  setStatus(`Face (${nx.toFixed(2)}, ${ny.toFixed(2)}, ${nz.toFixed(2)}) placed down`);
+}
+
+function wireOrientEvents() {
+  // Axis orientation buttons
+  document.querySelectorAll('.axis-btn').forEach(btn => {
+    btn.addEventListener('click', () => orientAxis(btn.dataset.orient));
+  });
+
+  // Manual rotation nudge buttons
+  document.querySelectorAll('[data-rot-axis]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      nudgeRotation(btn.dataset.rotAxis, parseFloat(btn.dataset.rotDeg));
+    });
+  });
+
+  document.getElementById('btn-auto-orient').addEventListener('click', autoOrient);
+  document.getElementById('btn-place-bed').addEventListener('click', () => {
+    bakeRotation();
+    placeOnBed();
+    updateStats(mainMesh.geometry);
+  });
+  document.getElementById('btn-reset-orient').addEventListener('click', () => {
+    if (!mainMesh) return;
+    bakeRotation();
+    // Re-load original geometry to restore rotation
+    const orig = state.geometry;
+    if (orig) {
+      mainMesh.geometry = orig;
+      if (wireframeMesh) wireframeMesh.geometry = orig;
+      mainMesh.position.set(0,0,0);
+      mainMesh.rotation.set(0,0,0);
+      if (wireframeMesh) { wireframeMesh.position.set(0,0,0); wireframeMesh.rotation.set(0,0,0); }
+      state.repairedGeometry = null;
+      rotState.x = rotState.y = rotState.z = 0;
+      updateRotDisplay();
+      updateStats(orig);
+      runRepairScan(orig);
+      detectFlatFaces(orig);
+      fitCamera();
+      setStatus('Rotation reset to original');
+    }
+  });
+}
+
 // ── Wire events ───────────────────────────────────────────
 const nozzleInfo={0.2:'Min wall: 0.4mm &middot; Min feature: 0.2mm &middot; Layer: 0.05&ndash;0.15mm',0.4:'Min wall: 0.8mm &middot; Min feature: 0.5mm &middot; Layer: 0.1&ndash;0.3mm',0.6:'Min wall: 1.2mm &middot; Min feature: 0.8mm &middot; Layer: 0.15&ndash;0.45mm',0.8:'Min wall: 1.6mm &middot; Min feature: 1.0mm &middot; Layer: 0.2&ndash;0.6mm'};
 
@@ -802,7 +1181,7 @@ function wireEvents(){
   document.getElementById('btn-repair').addEventListener('click',async()=>{
     const btn=document.getElementById('btn-repair');btn.disabled=true;btn.textContent='Repairing...';
     setStatus('Repairing mesh...',30);await new Promise(r=>setTimeout(r,30));
-    const{geo,removed,repaired}=doRepair(state.repairedGeometry||state.geometry);
+    const{geo,removed}=doRepair(state.repairedGeometry||state.geometry);
     state.repairedGeometry=geo;
     if(mainMesh){scene.remove(mainMesh);mainMesh.geometry.dispose();mainMesh.material.dispose();}
     if(wireframeMesh){scene.remove(wireframeMesh);wireframeMesh.geometry.dispose();}
@@ -847,6 +1226,7 @@ function wireEvents(){
   });
   document.getElementById('btn-export-stl').addEventListener('click',exportSTL);
   document.getElementById('btn-export-3mf').addEventListener('click',export3MF);
+  wireOrientEvents();
 }
 
 async function handleFile(file){
